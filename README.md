@@ -1,14 +1,14 @@
-# Microservicos Pedidos
+# 🧩 Microservicos Pedidos
 
 Projeto pessoal de estudo com o objetivo de praticar arquitetura de microsserviços "como o mercado usa" — espaço dedicado para aprender arquitetura distribuída, boas práticas de organização (Jira, ADRs, contratos OpenAPI) e, futuramente, Angular no consumo dos serviços.
 
-## Visão geral
+## 🔎 Visão geral
 
 Sistema simples de pedidos, dividido em 3 serviços independentes:
 
-- **`product-service`** — catálogo de produtos e controle de estoque
-- **`order-service`** — criação e consulta de pedidos, validando estoque via chamada síncrona ao `product-service` e publicando eventos assíncronos após a criação
-- **`notification-service`** — consome eventos de pedido criado e simula o envio de notificações
+- 📦 **`product-service`** — catálogo de produtos e controle de estoque
+- 🧾 **`order-service`** — criação e consulta de pedidos, validando estoque via chamada síncrona ao `product-service` e publicando eventos assíncronos após a criação
+- 🔔 **`notification-service`** — consome eventos de pedido criado e simula o envio de notificações
 
 Fluxo resumido:
 
@@ -22,7 +22,7 @@ Cliente → order-service → (REST/WebClient) → product-service
 
 Cada serviço possui seu próprio banco de dados (Postgres), reforçando o isolamento entre eles — nenhum serviço acessa diretamente o banco de outro.
 
-## Arquitetura
+## 🏗️ Arquitetura
 
 - **Estilo arquitetural:** MVC em camadas (Controller → Service → Repository → Model/DTO → Exception) nesta fase inicial, com refatoração planejada para Arquitetura Hexagonal (Ports & Adapters) como evolução futura.
 - **Comunicação síncrona:** WebClient (Spring WebFlux) para chamadas REST entre serviços.
@@ -33,7 +33,7 @@ Cada serviço possui seu próprio banco de dados (Postgres), reforçando o isola
 
 As decisões de arquitetura e seus motivos estão documentadas em [`docs/adr/`](./docs/adr).
 
-## Estrutura do repositório
+## 📁 Estrutura do repositório
 
 ```
 microservicos-pedidos/
@@ -62,7 +62,7 @@ microservicos-pedidos/
     └── Dockerfile
 ```
 
-## Stack técnica
+## 🛠️ Stack técnica
 
 | Camada              | Tecnologia                     |
 |---------------------|---------------------------------|
@@ -75,7 +75,7 @@ microservicos-pedidos/
 | Frontend            | Angular                         |
 | Organização do projeto | Jira Cloud (board Kanban)    |
 
-## Como rodar o projeto
+## 🚀 Como rodar o projeto
 
 > ⚠️ Seção a ser preenchida conforme os serviços forem implementados.
 
@@ -91,7 +91,7 @@ Isso deve subir:
 
 Cada serviço expõe sua documentação Swagger em `/swagger-ui.html`.
 
-## Roadmap de evolução
+## 🗺️ Roadmap de evolução
 
 Após o esqueleto dos 3 serviços estar funcionando ponta a ponta:
 
@@ -103,7 +103,7 @@ Após o esqueleto dos 3 serviços estar funcionando ponta a ponta:
 6. Refatoração de MVC em camadas para Arquitetura Hexagonal
 7. Client Angular consumindo os serviços via Gateway
 
-## Organização e acompanhamento
+## 📋 Organização e acompanhamento
 
 O desenvolvimento é acompanhado via Jira Cloud (board Kanban, projeto `KAN`), com a estrutura:
 
@@ -111,6 +111,6 @@ O desenvolvimento é acompanhado via Jira Cloud (board Kanban, projeto `KAN`), c
 - **Story** por feature ou contrato de API
 - **Subtask** com os passos técnicos, escritos antes de iniciar a implementação
 
-## Status
+## 📌 Status
 
 🚧 Em desenvolvimento — projeto de estudo, sem deploy em produção.
