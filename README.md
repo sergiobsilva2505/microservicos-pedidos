@@ -12,12 +12,12 @@ Sistema simples de pedidos, dividido em 3 serviços independentes:
 
 Fluxo resumido:
 
-```
-Cliente → order-service → (REST/WebClient) → product-service
-                ↓
-         (evento OrderCreated via RabbitMQ)
-                ↓
-        notification-service
+```mermaid
+flowchart TD
+    Cliente(["Cliente"]) -->|"REST"| Order["order-service"]
+    Order -->|"REST / WebClient"| Product["product-service"]
+    Order -->|"evento OrderCreated"| MQ{{"RabbitMQ"}}
+    MQ --> Notification["notification-service"]
 ```
 
 Cada serviço possui seu próprio banco de dados (Postgres), reforçando o isolamento entre eles — nenhum serviço acessa diretamente o banco de outro.
@@ -37,29 +37,29 @@ As decisões de arquitetura e seus motivos estão documentadas em [`docs/adr/`](
 
 ```
 microservicos-pedidos/
-├── docker-compose.yml
-├── README.md
-├── docs/
-│   └── adr/
-├── order-service/
-│   ├── src/
-│   ├── openapi.yaml
-│   ├── pom.xml
-│   └── Dockerfile
-├── product-service/
-│   ├── src/
-│   ├── openapi.yaml
-│   ├── pom.xml
-│   └── Dockerfile
-├── notification-service/
-│   ├── src/
-│   ├── openapi.yaml
-│   ├── pom.xml
-│   └── Dockerfile
-└── client-angular/
-    ├── src/
-    ├── package.json
-    └── Dockerfile
+├── 🐳 docker-compose.yml
+├── 📄 README.md
+├── 📁 docs/
+│   └── 📁 adr/
+├── 📁 order-service/
+│   ├── 📁 src/
+│   ├── 📝 openapi.yaml
+│   ├── ⚙️ pom.xml
+│   └── 🐳 Dockerfile
+├── 📁 product-service/
+│   ├── 📁 src/
+│   ├── 📝 openapi.yaml
+│   ├── ⚙️ pom.xml
+│   └── 🐳 Dockerfile
+├── 📁 notification-service/
+│   ├── 📁 src/
+│   ├── 📝 openapi.yaml
+│   ├── ⚙️ pom.xml
+│   └── 🐳 Dockerfile
+└── 📁 client-angular/
+    ├── 📁 src/
+    ├── ⚙️ package.json
+    └── 🐳 Dockerfile
 ```
 
 ## 🛠️ Stack técnica
