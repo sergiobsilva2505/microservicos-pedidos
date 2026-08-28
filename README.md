@@ -1,13 +1,16 @@
 # 🧩 Microservicos Pedidos
 
-Projeto pessoal de estudo com o objetivo de praticar arquitetura de microsserviços "como o mercado usa" — espaço dedicado para aprender arquitetura distribuída, boas práticas de organização (Jira, ADRs, contratos OpenAPI) e, futuramente, Angular no consumo dos serviços.
+Projeto pessoal de estudo com o objetivo de praticar arquitetura de microsserviços "como o mercado usa" — espaço
+dedicado para aprender arquitetura distribuída, boas práticas de organização (Jira, ADRs, contratos OpenAPI) e,
+futuramente, Angular no consumo dos serviços.
 
 ## 🔎 Visão geral
 
 Sistema simples de pedidos, dividido em 3 serviços independentes:
 
 - 📦 **`product-service`** — catálogo de produtos e controle de estoque
-- 🧾 **`order-service`** — criação e consulta de pedidos, validando estoque via chamada síncrona ao `product-service` e publicando eventos assíncronos após a criação
+- 🧾 **`order-service`** — criação e consulta de pedidos, validando estoque via chamada síncrona ao `product-service` e
+  publicando eventos assíncronos após a criação
 - 🔔 **`notification-service`** — consome eventos de pedido criado e simula o envio de notificações
 
 Fluxo resumido:
@@ -20,15 +23,19 @@ flowchart TD
     MQ --> Notification["notification-service"]
 ```
 
-Cada serviço possui seu próprio banco de dados (Postgres), reforçando o isolamento entre eles — nenhum serviço acessa diretamente o banco de outro.
+Cada serviço possui seu próprio banco de dados (Postgres), reforçando o isolamento entre eles — nenhum serviço acessa
+diretamente o banco de outro.
 
 ## 🏗️ Arquitetura
 
-- **Estilo arquitetural:** MVC em camadas (Controller → Service → Repository → Model/DTO → Exception) nesta fase inicial, com refatoração planejada para Arquitetura Hexagonal (Ports & Adapters) como evolução futura.
+- **Estilo arquitetural:** MVC em camadas (Controller → Service → Repository → Model/DTO → Exception) nesta fase
+  inicial, com refatoração planejada para Arquitetura Hexagonal (Ports & Adapters) como evolução futura.
 - **Comunicação síncrona:** WebClient (Spring WebFlux) para chamadas REST entre serviços.
-- **Comunicação assíncrona:** RabbitMQ, com o `order-service` publicando o evento `OrderCreated` (payload com dados completos) e o `notification-service` consumindo.
+- **Comunicação assíncrona:** RabbitMQ, com o `order-service` publicando o evento `OrderCreated` (payload com dados
+  completos) e o `notification-service` consumindo.
 - **Persistência:** Postgres via Docker, um banco dedicado por serviço (Database per Service).
-- **Dados:** o pedido armazena um snapshot (nome e preço) do produto no momento da compra, em vez de apenas uma referência ao ID — evitando que mudanças futuras no catálogo alterem pedidos já criados.
+- **Dados:** o pedido armazena um snapshot (nome e preço) do produto no momento da compra, em vez de apenas uma
+  referência ao ID — evitando que mudanças futuras no catálogo alterem pedidos já criados.
 - **Contratos de API:** definidos em OpenAPI (`openapi.yaml`) dentro de cada serviço, antes da implementação.
 
 As decisões de arquitetura e seus motivos estão documentadas em [`docs/adr/`](./docs/adr).
@@ -64,16 +71,16 @@ microservicos-pedidos/
 
 ## 🛠️ Stack técnica
 
-| Camada              | Tecnologia                     |
-|---------------------|---------------------------------|
-| Backend             | Java + Spring Boot              |
-| Comunicação síncrona| WebClient (Spring WebFlux)      |
-| Comunicação assíncrona | RabbitMQ                     |
-| Banco de dados      | PostgreSQL (um por serviço)     |
-| Documentação de API | OpenAPI 3.0.3 (Swagger)         |
-| Containerização     | Docker / Docker Compose         |
-| Frontend            | Angular                         |
-| Organização do projeto | Jira Cloud (board Kanban)    |
+| Camada                 | Tecnologia                  |
+|------------------------|-----------------------------|
+| Backend                | Java + Spring Boot          |
+| Comunicação síncrona   | WebClient (Spring WebFlux)  |
+| Comunicação assíncrona | RabbitMQ                    |
+| Banco de dados         | PostgreSQL (um por serviço) |
+| Documentação de API    | OpenAPI 3.0.3 (Swagger)     |
+| Containerização        | Docker / Docker Compose     |
+| Frontend               | Angular                     |
+| Organização do projeto | Jira Cloud (board Kanban)   |
 
 ## 🚀 Como rodar o projeto
 
@@ -84,6 +91,7 @@ docker-compose up
 ```
 
 Isso deve subir:
+
 - `product-service` e seu banco (`product-db`)
 - `order-service` e seu banco (`order-db`)
 - `notification-service`
