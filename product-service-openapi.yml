@@ -13,14 +13,14 @@ servers:
   - url: http://localhost:8080/api
     description: Ambiente de desenvolvimento
 tags:
-  - name: product
+  - name: Product
     description: Tudo sobre os produtos
 
 paths:
   /products:
     post:
       tags:
-        - product
+        - Product
       summary: Cria um novo produto
       description: Adiciona um novo produto ao catálogo
       operationId: addProduct
@@ -52,7 +52,7 @@ paths:
                 $ref: "#/components/schemas/ProblemDetail"
     get:
       tags:
-        - product
+        - Product
       summary: Lista todos os produtos
       description: Recupera todos os produtos.
       operationId: findAll
@@ -92,7 +92,7 @@ paths:
   /products/{id}:
     get:
       tags:
-        - product
+        - Product
       summary: Busca produto por id.
       description: Busca produto por id.
       operationId: findById
@@ -125,7 +125,7 @@ paths:
 
     put:
       tags:
-        - product
+        - Product
       summary: Atualiza um produto por id
       description: Atualiza um produto no catálogo
       operationId: updateProduct
@@ -170,7 +170,7 @@ paths:
                 $ref: "#/components/schemas/ProblemDetail"
     delete:
       tags:
-        - product
+        - Product
       summary: Inativa um produto por id
       description: Inativa um produto no catálogo
       operationId: deleteProduct
@@ -200,7 +200,7 @@ paths:
   /products/{id}/inventory:
     patch:
       tags:
-        - product
+        - Product
       summary: Atualiza o estoque de um produto
       description: Ajusta o estoque de um produto via delta (incremento/decremento). Retorna 400 se o ajuste resultar em estoque negativo.
       operationId: deltaInventory
